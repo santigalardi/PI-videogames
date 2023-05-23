@@ -1,0 +1,32 @@
+.cardContainer {
+  border: 0.2px solid rgba(255, 255, 255, 0.205);
+  border-radius: 3px;
+  width: 280px;
+  margin: 20px;
+  background-color: rgb(40, 49, 68);
+  transition: transform 0.5s;
+}
+
+.cardContainer:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 0px 15px rgba(121, 233, 16, 0.747);
+  border: 1px solid rgba(121, 233, 16, 0.29);
+  cursor: pointer;
+}
+
+.imgContainer {
+  display: flex;
+  justify-content: center;
+  align-items: top;
+  overflow: hidden;
+  height: 70%;
+}
+
+.imgContainer > img {
+  height: 300px;
+}
+
+.propsContainer {
+  height: 30%;
+  margin: 20px;
+}

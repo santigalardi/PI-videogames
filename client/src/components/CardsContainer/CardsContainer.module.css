@@ -1,0 +1,12 @@
+.cardsContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filters {
+  margin: 30px;
+  display: flex;
+  justify-content: space-between;
+}

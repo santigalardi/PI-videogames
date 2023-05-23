@@ -1,0 +1,44 @@
+.landing {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.landing > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.logoContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.logo {
+  font-size: 25px;
+  font-family: 'Kdam Thmor Pro', sans-serif;
+  color: rgb(255, 255, 255);
+  text-shadow: 1px 2px 4px black;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.5s;
+}
+
+.logo:hover {
+  text-shadow: 2px 3px 4px rgba(0, 0, 0, 0.447);
+  transform: scale(1.05);
+  filter: invert(13%) sepia(13%) saturate(2327%) hue-rotate(26deg) brightness(89%) contrast(86%);
+}
+
+.icon {
+  height: 80px;
+  margin: 10px;
+  filter: invert(94%) sepia(6%) saturate(26%) hue-rotate(257deg) brightness(107%) contrast(107%);
+}
