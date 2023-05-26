@@ -20,8 +20,12 @@ export const getVideogames = () => {
 
 export const getVideogame = (id) => {
   return async function (dispatch) {
-    const videogame = (await axios.get(`${URL}/${id}`)).data;
-    dispatch({ type: GET_VIDEOGAME, payload: videogame });
+    try {
+      const videogame = (await axios.get(`${URL}/${id}`)).data;
+      dispatch({ type: GET_VIDEOGAME, payload: videogame });
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 
@@ -40,9 +44,8 @@ export const getGenres = () => {
 };
 
 export const postVideogame = (payload) => {
-  return async function (dispatch) {
+  return async function () {
     const videogame = await axios.post(URL, payload);
-    console.log(videogame);
     return videogame;
   };
 };

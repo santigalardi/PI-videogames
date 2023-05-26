@@ -1,0 +1,56 @@
+.detailContainer {
+  display: flex;
+  margin: 30px 50px;
+}
+
+.imgContainer {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 20px 0;
+  overflow: hidden;
+}
+
+.imgContainer > img {
+  height: 350px;
+  border: 1px solid black;
+}
+
+.detailsContainer {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.titleContainer {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.details {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.details div {
+  margin: 30px 0;
+}
+
+.details h3 {
+  width: 100%;
+  display: inline;
+}
+
+.details p {
+  display: inline;
+  font-size: 15px;
+}
+
+.description {
+  margin: 30px 60px;
+  text-align: justify;
+}

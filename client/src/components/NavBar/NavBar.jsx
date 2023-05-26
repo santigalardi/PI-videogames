@@ -17,9 +17,11 @@ const NavBar = () => {
         </NavLink>
       </div>
       {location.pathname !== '/create' && (
-        <NavLink to='/create' className={styles.create}>
-          CREATE VIDEOGAME!
-        </NavLink>
+        <div className={styles.createContainer}>
+          <NavLink to='/create' className={styles.create}>
+            CREATE VIDEOGAME!
+          </NavLink>
+        </div>
       )}
       {location.pathname !== '/create' && !location.pathname.includes('/detail/') && <SearchBar />}
     </div>

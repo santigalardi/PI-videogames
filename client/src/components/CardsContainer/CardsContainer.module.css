@@ -5,8 +5,21 @@
   justify-content: center;
 }
 
+.link {
+  text-decoration: none;
+  color: white;
+}
+
 .filters {
-  margin: 30px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  padding: 30px;
+}
+
+.filter {
+  margin: 20px;
+}
+
+.filter label {
+  padding: 10px;
 }

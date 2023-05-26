@@ -36,24 +36,24 @@ const rootReducer = (state = initialState, action) => {
     case SORT_ALPHABETICALLY:
       let sortedAlphabetically;
       if (action.payload === 'A') {
-        sortedAlphabetically = state.allVideogames.slice().sort((a, b) => {
+        sortedAlphabetically = state.videogames.slice().sort((a, b) => {
           if (a.name > b.name) return 1;
           if (a.name < b.name) return -1;
           return 0;
         });
       } else {
-        sortedAlphabetically = state.allVideogames.slice().sort((a, b) => {
+        sortedAlphabetically = state.videogames.slice().sort((a, b) => {
           if (a.name > b.name) return -1;
           if (a.name < b.name) return 1;
           return 0;
         });
       }
-      return { ...state, videogames: action.payload === 'Random' ? state.allVideogames : sortedAlphabetically };
+      return { ...state, videogames: action.payload === 'Random' ? state.videogames : sortedAlphabetically };
 
     case SORT_BY_RATING:
-      const allVideogamesCopy = [...state.allVideogames];
+      const allVideogamesCopy = [...state.videogames];
       const sortedByRating = action.payload === 'max' ? allVideogamesCopy.sort((a, b) => b.rating - a.rating) : allVideogamesCopy.sort((a, b) => a.rating - b.rating);
-      return { ...state, videogames: action.payload === 'Random' ? state.allVideogames : sortedByRating };
+      return { ...state, videogames: action.payload === 'Random' ? state.videogames : sortedByRating };
 
     default:
       return state;

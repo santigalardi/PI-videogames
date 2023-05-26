@@ -39,9 +39,13 @@ const getAllVideogames = async () => {
 
   return [...apiVideogames, ...databaseVideogames];
 };
+
 const getVideogameById = async (id, source) => {
-  const videogameRaw = source === 'API' ? (await axios(`${URL}/${id}?key=${API_KEY}`)).data : await Videogame.findByPk(id);
-  const videogame = cleanArray([videogameRaw]);
+  console.log(id, source);
+  let dbVideogame;
+  if (source === 'DB') dbVideogame = await Videogame.findByPk(id);
+  const videogameRaw = source === 'API' ? (await axios(`${URL}/${id}?key=${API_KEY}`)).data : dbVideogame.dataValues;
+  const videogame = source === 'API' ? cleanArray([videogameRaw]) : [videogameRaw];
   return [...videogame];
 };
 

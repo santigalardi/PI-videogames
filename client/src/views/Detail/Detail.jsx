@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getVideogame } from '../../redux/actions';
 import { useEffect } from 'react';
 
+import styles from './Detail.module.css';
+
 const Detail = (props) => {
   const dispatch = useDispatch();
 
@@ -13,15 +15,39 @@ const Detail = (props) => {
 
   return (
     <div>
-      {videogame.length > 0 ? (
-        <div key={videogame.id}>
-          <h1>{videogame[0].name}</h1>
-          <img src={videogame[0].image} alt={videogame[0].name} />
-          <h3>{videogame[0].platforms.join(', ')} </h3>
-          <h3>{videogame[0].genres.join(', ')} </h3>
-          <h3>{videogame[0].released} </h3>
-          <h3>{videogame[0].rating} </h3>
-          <h3>{videogame[0].description} </h3>
+      {videogame && videogame.length > 0 ? (
+        <div>
+          <div key={videogame.id} className={styles.detailContainer}>
+            <div className={styles.imgContainer}>
+              <img src={videogame[0].image} alt={videogame[0].name} />
+            </div>
+            <div className={styles.detailsContainer}>
+              <div className={styles.titleContainer}>
+                <h1>{videogame[0].name}</h1>
+              </div>
+              <div className={styles.details}>
+                <div>
+                  <h3>Platforms: </h3>
+                  <p>{videogame[0].platforms.join(', ')}</p>
+                </div>
+                <div>
+                  <h3>Genres: </h3>
+                  <p>{videogame[0].genres.join(', ')}</p>
+                </div>
+                <div>
+                  <h3>Released: </h3>
+                  <p>{videogame[0].released}</p>
+                </div>
+                <div>
+                  <h3>Rating: </h3>
+                  <p>{videogame[0].released}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={styles.description}>
+            <p dangerouslySetInnerHTML={{ __html: videogame[0].description }}></p>
+          </div>
         </div>
       ) : (
         <p>Loading...</p>

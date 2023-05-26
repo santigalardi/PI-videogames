@@ -1,7 +1,17 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
 .btn {
   font-family: 'Electrolize', sans-serif;
   font-size: 15px;
   font-weight: 700;
   margin: 0 5px;
-  background-color: rgb(166, 218, 12);
+  background: rgb(224, 146, 3);
+}
+
+.btn:hover {
+  background-color: #ffa500;
+  transform: scale(1.1);
 }

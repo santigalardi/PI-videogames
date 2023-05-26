@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGenres, postVideogame } from '../../redux/actions';
+import crossClear from '../../assets/images/cruz.png';
+import styles from './Form.module.css';
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -14,16 +16,20 @@ const Form = () => {
     image: '',
     platforms: [],
     released: '',
-    rating: 0.0,
+    rating: 1,
     genres: [],
     description: '',
   });
 
   const [errors, setErrors] = useState({
     name: '',
-    description: '',
-    platforms: '',
     image: '',
+    platforms: '',
+    released: '',
+    rating: '',
+    genres: '',
+    description: '',
+    form: '',
   });
 
   useEffect(() => {
@@ -31,12 +37,53 @@ const Form = () => {
   }, [dispatch]);
 
   const validate = (form) => {
-    if (/^[a-zA-Z0-9\s]{1,50}$/.test(form.name)) {
-      setErrors({ ...errors, name: '' });
-    } else {
-      setErrors({ ...errors, name: 'Hay un error en name' });
-    }
-    if (form.name === '') setErrors({ ...errors, name: '' });
+    setErrors((prevErrors) => {
+      let newErrors = { ...prevErrors };
+
+      if (form.name.length > 40) {
+        newErrors.name = 'Max 40 characters';
+      } else {
+        newErrors.name = '';
+      }
+
+      if (form.image === '') {
+        newErrors.image = '';
+      } else if (/^(https?:\/\/)?[\w.-]+\.[a-zA-Z]{2,}(\/[\w.-]*)*\/?$/.test(form.image)) {
+        newErrors.image = '';
+      } else {
+        newErrors.image = 'Must be a valid URL';
+      }
+
+      if (form.platforms.length > 0) newErrors.platforms = '';
+
+      // Comprobar si la fecha seleccionada es una fecha pasada
+      const currentDate = new Date();
+      const selectedDate = new Date(form.released);
+
+      if (selectedDate > currentDate) {
+        newErrors.released = 'Select a past date';
+      } else {
+        newErrors.released = '';
+      }
+
+      if (form.rating < 1 || form.rating > 5) {
+        newErrors.rating = 'Rating must be between 1 and 5';
+      } else {
+        newErrors.rating = '';
+      }
+
+      if (form.genres.length > 0) newErrors.genres = '';
+
+      if (form.description.length === 0) {
+        newErrors.description = '';
+      } else if (form.description.length < 15) {
+        newErrors.description = 'Minimum 15 characters';
+      } else {
+        newErrors.description = '';
+      }
+
+      return newErrors;
+    });
   };
 
   const changeHandler = (event) => {
@@ -46,8 +93,6 @@ const Form = () => {
     validate({ ...form, [property]: value });
 
     setForm({ ...form, [property]: value });
-
-    console.log(form);
   };
 
   const handleSelect = (event) => {
@@ -85,20 +130,38 @@ const Form = () => {
 
         const filteredVideogames = allVideogames.filter((videogame) => videogame.name.toLowerCase() === form.name.toLowerCase());
 
+        const newErrors = { ...errors };
+
         if (filteredVideogames.length > 0) {
           // El videojuego ya existe
-          setErrors({ ...errors, name: 'Videogame already exists.' });
-        } else {
+          newErrors.name = 'Videogame already exists';
+        }
+
+        if (form.name === '') newErrors.name = "Please write your videogame's name";
+
+        if (form.image === '') newErrors.image = "Please write your videogame's name";
+
+        if (form.platforms.length === 0) newErrors.platforms = 'Please select a platform';
+
+        if (form.released === '') newErrors.released = 'Please select a release date';
+
+        if (form.rating === '') newErrors.rating = 'Please rate your game';
+
+        if (form.genres.length === 0) newErrors.genres = 'Please select a genre';
+
+        setErrors(newErrors);
+        const hasNoErrors = Object.values(newErrors).every((value) => value === '');
+
+        if (hasNoErrors) {
           // Continuar con el envío del formulario si no hay errores
-          console.log(form);
           dispatch(postVideogame(form));
           alert('Videogame Created!');
           setForm({
             name: '',
-            background_image: '',
+            image: '',
             platforms: [],
-            released: null,
-            rating: 0.0,
+            released: '',
+            rating: 1,
             genres: [],
             description: '',
           });
@@ -107,15 +170,14 @@ const Form = () => {
       })
       .catch((error) => {
         console.log(error);
-        // Manejar el error de la solicitud
-        setErrors({ ...errors, name: 'Hubo un error al verificar el nombre del videojuego. Por favor, intenta nuevamente.' });
+        setErrors({ ...errors, form: 'Hubo un error al crear el videojuego. Por favor, intenta nuevamente.' });
       });
   };
 
   return (
-    <div>
-      <h2>Create your videogame!</h2>
-      <form onSubmit={handleSubmit}>
+    <div className={styles.formContainer}>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <h2>Create your videogame!</h2>
         <div>
           <label>Name: </label>
           <input type='text' value={form.name} onChange={changeHandler} name='name' />
@@ -125,6 +187,7 @@ const Form = () => {
         <div>
           <label>Image: </label>
           <input type='text' value={form.image} onChange={changeHandler} name='image' />
+          {errors.image && <span>{errors.image}</span>}
         </div>
 
         <div>
@@ -138,23 +201,28 @@ const Form = () => {
             <option value='Xbox Series S/X'>Xbox Series S/X</option>
           </select>
           {form.platforms.length > 0 && (
-            <div>
+            <div className={styles.selectedContainer}>
               <ul>
                 <li>{form.platforms.map((platform) => platform + ', ')}</li>
               </ul>
-              <button onClick={() => clearSelection('platforms')}>Clear</button>
+              <button onClick={() => clearSelection('platforms')} className={styles.clearButton}>
+                <img src={crossClear} alt='delete' />
+              </button>
             </div>
           )}
+          {errors.platforms && <span>{errors.platforms}</span>}
         </div>
 
         <div>
           <label>Released: </label>
           <input type='date' value={form.released} onChange={changeHandler} name='released' />
+          {errors.released && <span>{errors.released}</span>}
         </div>
 
         <div>
           <label>Rating: </label>
           <input type='number' value={form.rating} onChange={changeHandler} name='rating' />
+          {errors.rating && <span>{errors.rating}</span>}
         </div>
 
         <div>
@@ -167,19 +235,28 @@ const Form = () => {
             ))}
           </select>
           {form.genres.length > 0 && (
-            <ul>
-              <li>{form.genres.map((genre) => genre + ', ')}</li>
-              <button onClick={() => clearSelection('genres')}>Clear</button>
-            </ul>
+            <div className={styles.selectedContainer}>
+              <ul>
+                <li>{form.genres.map((genre) => genre + ', ')}</li>
+              </ul>
+              <button onClick={() => clearSelection('genres')} className={styles.clearButton}>
+                <img src={crossClear} alt='delete' />
+              </button>
+            </div>
           )}
+          {errors.genres && <span>{errors.genres}</span>}
         </div>
 
         <div>
           <label>Description: </label>
           <textarea type='text' value={form.description} onChange={changeHandler} name='description' />
+          {errors.description && <span>{errors.description}</span>}
         </div>
 
-        <button type='submit'>Create</button>
+        <button type='submit' className={styles.submit}>
+          Create
+        </button>
+        {errors.form && <span>{errors.form}</span>}
       </form>
     </div>
   );

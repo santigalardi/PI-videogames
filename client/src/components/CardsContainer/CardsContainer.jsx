@@ -50,42 +50,50 @@ const CardsContainer = () => {
   return (
     <div>
       <div className={styles.filters}>
-        <label>Filter By Genre:</label>
-        <select onChange={(event) => handleGenresFilter(event)} name='genres'>
-          <option value='All'>All</option>
-          {genres.map((genre, index) => (
-            <option key={index} value={genre.name}>
-              {genre.name}
-            </option>
-          ))}
-        </select>
+        <div className={styles.filter}>
+          <label>Filter By Genre:</label>
+          <select onChange={(event) => handleGenresFilter(event)} name='genres'>
+            <option value='All'>All</option>
+            {genres.map((genre, index) => (
+              <option key={index} value={genre.name}>
+                {genre.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        <label>Filter By Source:</label>
-        <select onChange={(event) => handleCreatedFilter(event)}>
-          <option value='All'>All</option>
-          <option value='API'>API</option>
-          <option value='created'>Created</option>
-        </select>
+        <div className={styles.filter}>
+          <label>Filter By Source:</label>
+          <select onChange={(event) => handleCreatedFilter(event)}>
+            <option value='All'>All</option>
+            <option value='API'>API</option>
+            <option value='created'>Created</option>
+          </select>
+        </div>
 
-        <label>Sort Alphabetically:</label>
-        <select onChange={(event) => handleSortAlphabetically(event)}>
-          <option value='Random'>Random</option>
-          <option value='A'>A-Z</option>
-          <option value='Z'>Z-A</option>
-        </select>
+        <div className={styles.filter}>
+          <label>Sort Alphabetically:</label>
+          <select onChange={(event) => handleSortAlphabetically(event)}>
+            <option value='Random'>Random</option>
+            <option value='A'>A-Z</option>
+            <option value='Z'>Z-A</option>
+          </select>
+        </div>
 
-        <label>Sort By Rating:</label>
-        <select onChange={(event) => handleSortByRating(event)}>
-          <option value='Random'>Random</option>
-          <option value='max'>High to Low</option>
-          <option value='min'>Low to High</option>
-        </select>
+        <div className={styles.filter}>
+          <label>Sort By Rating:</label>
+          <select onChange={(event) => handleSortByRating(event)}>
+            <option value='Random'>Random</option>
+            <option value='max'>High to Low</option>
+            <option value='min'>Low to High</option>
+          </select>
+        </div>
       </div>
-      <Pagination videogamesPerPage={videogamesPerPage} allVideogames={allVideogames.length} pagination={pagination} />
+      <Pagination videogamesPerPage={videogamesPerPage} allVideogames={allVideogames.length} currentPage={currentPage} pagination={pagination} />
 
       <div className={styles.cardsContainer}>
         {currentVideogames.map((videogame) => (
-          <NavLink to={`/detail/${videogame.id}`} key={videogame.id}>
+          <NavLink to={`/detail/${videogame.id}`} key={videogame.id} className={styles.link}>
             <Card name={videogame.name} image={videogame.image} genres={videogame.genres.join(', ')} rating={videogame.rating} />
           </NavLink>
         ))}
