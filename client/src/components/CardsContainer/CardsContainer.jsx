@@ -94,7 +94,7 @@ const CardsContainer = () => {
       <div className={styles.cardsContainer}>
         {currentVideogames.map((videogame) => (
           <NavLink to={`/detail/${videogame.id}`} key={videogame.id} className={styles.link}>
-            <Card name={videogame.name} image={videogame.image} genres={videogame.genres.join(', ')} rating={videogame.rating} />
+            <Card name={videogame.name} image={videogame.image} genres={videogame.genres.join(', ')} platforms={videogame.platforms.join(', ')} rating={videogame.rating} />
           </NavLink>
         ))}
       </div>

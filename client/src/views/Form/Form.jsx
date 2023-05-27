@@ -106,10 +106,12 @@ const Form = () => {
         });
       }
     } else if (name === 'genres') {
-      setForm({
-        ...form,
-        genres: [...form.genres, value],
-      });
+      if (!form.genres.includes(value)) {
+        setForm({
+          ...form,
+          genres: [...form.genres, value],
+        });
+      }
     }
   };
 
