@@ -3,7 +3,7 @@ import NavBar from './components/NavBar/NavBar';
 import { Route, useLocation } from 'react-router-dom';
 import './App.css';
 import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:3001/';
+axios.defaults.baseURL = 'https://pi-videogames-production-fddd.up.railway.app/';
 
 function App() {
   const location = useLocation();
