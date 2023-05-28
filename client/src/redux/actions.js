@@ -1,5 +1,5 @@
 import axios from 'axios';
-const URL = 'http://localhost:3001/videogames';
+const URL = '/videogames';
 
 export const GET_VIDEOGAMES = 'GET_VIDEOGAMES';
 export const GET_VIDEOGAME = 'GET_VIDEOGAME';
@@ -38,7 +38,7 @@ export const getVideogamesByName = (name) => {
 
 export const getGenres = () => {
   return async function (dispatch) {
-    const genres = (await axios.get('http://localhost:3001/genres')).data;
+    const genres = (await axios.get('/genres')).data;
     dispatch({ type: GET_GENRES, payload: genres });
   };
 };
