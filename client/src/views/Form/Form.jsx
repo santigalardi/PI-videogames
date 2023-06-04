@@ -126,7 +126,7 @@ const Form = () => {
     event.preventDefault();
 
     axios
-      .get(`http://localhost:3001/videogames`)
+      .get(`https://pi-videogames-production-fddd.up.railway.app/videogames`)
       .then((response) => {
         const allVideogames = response.data;
 
